@@ -27,7 +27,7 @@ public sealed class NetworkSendHandler
     private int _bytesWritten;
     private int _bytesTransfered;
     private byte[] _sendBuffer = new byte[BUFFER_SIZE];
-    private byte[] _sendQueueBuffer = new byte[QUEUE_BUFFER_SIZE]; 
+    private byte[] _sendQueueBuffer = new byte[QUEUE_BUFFER_SIZE];
 
     public NetworkSendHandler(TCPSocketBase socketBase, Socket socket)
     {
@@ -38,15 +38,12 @@ public sealed class NetworkSendHandler
         _saea.Completed += OnCompleted;
     }
 
-    public void Send(ref NetworkBufferWriter writer)
+    public void Send(ref BufferWriter writer)
     {
         if (_socketBase.Disconnected)
             return;
 
-        var b = writer.ToArray();
-        for (var i = 0; i < ushort.MaxValue; i++)
-            _pendingData.Enqueue(b);
-
+        _pendingData.Enqueue(writer.ToArray());
         TrySend();
     }
 
@@ -58,7 +55,7 @@ public sealed class NetworkSendHandler
         // send no more than the buffer size 
         // will start batching
         var bytesToSend = _bytesWritten > BUFFER_SIZE ? BUFFER_SIZE : _bytesWritten;
-        
+
         _saea.SetBuffer(0, bytesToSend);
         Buffer.BlockCopy(_sendQueueBuffer, _bytesTransfered, _sendBuffer, 0, bytesToSend);
 
@@ -104,7 +101,7 @@ public sealed class NetworkSendHandler
     {
         if (!PrepareBatch())
             return;
-        
+
         SendBatch();
     }
 
@@ -131,7 +128,7 @@ public sealed class NetworkSendHandler
 
                 // pop it
                 _pendingData.TryDequeue(out _);
-                
+
                 Buffer.BlockCopy(buffer, 0, _sendQueueBuffer, _bytesWritten, bufferLength);
 
                 _bytesWritten += bufferLength;

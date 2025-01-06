@@ -6,17 +6,17 @@ using System.Text;
 
 namespace Shared.Networking;
 
-public unsafe struct NetworkBufferWriter
+public unsafe struct BufferWriter
 {
     private byte[] _buffer;
     private int _position;
 
-    public NetworkBufferWriter()
+    public BufferWriter()
         : this(256)
     {
     }
 
-    public NetworkBufferWriter(int initialCapacity)
+    public BufferWriter(int initialCapacity)
     {
         _buffer = new byte[initialCapacity];
         _position = 4;

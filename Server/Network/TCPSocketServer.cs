@@ -50,9 +50,7 @@ public sealed class TCPSocketServer : TCPSocketBase
 
     public void ProcessSessionBuffers()
     {
-        using var t = new ScopedTimer("ProcessSessionBuffers");
-
-        var handled = 0;
+        var t = new ScopedTimer("ProcessSessionBuffers");
 
         using (_sessionLock.EnterScope())
         {
@@ -64,12 +62,9 @@ public sealed class TCPSocketServer : TCPSocketBase
                     continue;
                 }
 
-                session.HandleBufferQueue(ref handled);
+                session.ProcessBufferQueue();
             }
         }
-
-        if(handled > 0)
-            Console.WriteLine($"Handled: {handled}");
     }
 
     public void DisconnectSessions()

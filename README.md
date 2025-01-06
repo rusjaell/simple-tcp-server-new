@@ -1,9 +1,8 @@
 # simple-tcp-server
 
-A simple TCP Socket that utilizes structured operations
+A Simple TCP Server-Client that utilizes structured serialized data for communication between server and client
 
-A Operation Header is structured as following: 
+Communication Protocol is structured as following:
 
-* 1 byte (Operation Code)
 * 4 byte (Payload Size)
 * N byte (Payload)

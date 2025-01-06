@@ -37,7 +37,7 @@ public abstract class TCPSocketBase
         }
     }
 
-    public void Send(ref NetworkBufferWriter writer) => _networkSendHandler.Send(ref writer);
+    public void Send(ref BufferWriter writer) => _networkSendHandler.Send(ref writer);
 
     public virtual void OnDisconnect()
     {

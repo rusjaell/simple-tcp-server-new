@@ -14,13 +14,10 @@ public sealed class TCPSession : TCPSocketBase
         Id = id;
     }
 
-    public void HandleBufferQueue(ref int handled)
+    public void ProcessBufferQueue()
     {
-        var i = 0; 
-        while (i < int.MaxValue && _networkReceiveHandler.BufferQueue.TryDequeue(out var data))
+        while (_networkReceiveHandler.BufferQueue.TryDequeue(out var data))
         {
-            i++;
-
             var reader = new BufferReader(data);
 
             var type = reader.ReadByte();
@@ -57,8 +54,6 @@ public sealed class TCPSession : TCPSocketBase
                     }
                     break;
             }
-
-            handled++;
         }
     }
 

@@ -7,7 +7,7 @@ public sealed class BufferWriterReaderTests
     [Fact]
     public void BufferWriterReaderTest()
     {
-        var writer = new NetworkBufferWriter();
+        var writer = new BufferWriter();
         writer.WriteByte(15);
         writer.WriteBoolean(true);
         writer.WriteInt16(1523);

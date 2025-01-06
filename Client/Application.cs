@@ -1,5 +1,4 @@
 ﻿using Client.Network;
-using Shared.Networking;
 using System;
 using System.Diagnostics;
 
@@ -46,6 +45,8 @@ public sealed class Application : IDisposable
                 updates = 0;
             }
 
+            TCPClient.ProcessBufferQueue();
+
             accumulator += deltaTime;
             while (accumulator >= frameTime)
             {
@@ -58,20 +59,6 @@ public sealed class Application : IDisposable
 
     public void Update(double dt)
     {
-        var writer = new NetworkBufferWriter();
-        writer.WriteByte(0);
-        writer.WriteInt16((short)Random.Shared.Next(0, short.MaxValue));
-        writer.WriteString("Test String");
-
-        TCPClient.Send(ref writer);
-
-        writer = new NetworkBufferWriter();
-        writer.WriteByte(1);
-        writer.WriteBoolean(Random.Shared.NextDouble() > 0.5);
-        writer.WriteInt32(Random.Shared.Next());
-        writer.WriteString("Another String");
-
-        TCPClient.Send(ref writer);
     }
 
     public void Dispose()

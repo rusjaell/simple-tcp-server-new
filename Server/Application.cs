@@ -14,7 +14,6 @@ public sealed class Application : IDisposable
 
     public void Initialize()
     {
-
         _ = TCPSocketServer.StartAsync();
     }
 
@@ -45,6 +44,8 @@ public sealed class Application : IDisposable
                 updates = 0;
             }
 
+            TCPSocketServer.ProcessSessionBuffers();
+
             accumulator += deltaTime;
             while (accumulator >= frameTime)
             {
@@ -57,7 +58,7 @@ public sealed class Application : IDisposable
 
     public void Update(double dt)
     {
-        TCPSocketServer.ProcessSessionBuffers();
+        // any application logic here
     }
 
     public void Dispose()
