@@ -1,6 +1,6 @@
-# simple-tcp-server
+# tcp-server
 
-A Simple TCP Server-Client that utilizes structured serialized data for communication between server and client
+A TCP Server-Client that utilizes structured serialized data for communication between server and client in .net 9
 
 Communication Protocol is structured as following:
 
